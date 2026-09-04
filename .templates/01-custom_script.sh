@@ -184,12 +184,12 @@ fi
 mkdir -p "$CONFIGLOCATION" || true
 CONFIGSOURCE="$CONFIGLOCATION/$slug.sh"
 
-bashio::log.notice "This script is used to run custom commands at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons"
+bashio::log.notice "This script is used to run custom commands at start of the addon. Instructions here : https://github.com/tomjansen/hassio-addons/wiki/Running-custom-scripts-in-Addons"
 bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
 
 # Download template if no script found and exit
 if [ ! -f "$CONFIGSOURCE" ]; then
-  TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
+  TEMPLATESOURCE="https://raw.githubusercontent.com/tomjansen/hassio-addons/master/.templates/script.template"
   curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE" || true
   exit 0
 fi

@@ -75,7 +75,7 @@ map:
   - homeassistant_config:rw
   - share:rw
   - media:rw
-name: Lidarr NAS
+name: Lidarr nightly
 options:
   env_vars: []
   PGID: 0
@@ -101,6 +101,6 @@ schema:
   networkdisks: str?
 slug: lidarr_nas
 udev: true
-url: https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/README.md
+url: https://github.com/tomjansen/hassio-addons/blob/master/lidarr/README.md
 version: "3.1.0.4875.3"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8686]"

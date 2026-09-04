@@ -31,7 +31,7 @@ for scripts in $MODULES; do
     echo "$scripts"
     success=false
     for attempt in 1 2 3 4 5; do
-        if curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" \
+        if curl -f -L -s -S "https://raw.githubusercontent.com/tomjansen/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" \
             && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ]; then
             success=true
             break

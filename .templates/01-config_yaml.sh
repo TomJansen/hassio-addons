@@ -115,7 +115,7 @@ if [[ "$CONFIGSOURCE" == "/config"* ]]; then
 else
     bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
 fi
-bashio::log.warning "This methodology is deprecated, please convert your Environment variables to the addon options env_vars. Instructions can be found here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
+bashio::log.warning "This methodology is deprecated, please convert your Environment variables to the addon options env_vars. Instructions can be found here : https://github.com/tomjansen/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
 echo ""
 
 # Check if yaml is valid

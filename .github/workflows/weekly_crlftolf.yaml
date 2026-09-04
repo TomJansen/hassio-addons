@@ -8,7 +8,7 @@ on:
   
 jobs:
   crlf-to-lf:
-    if: github.repository_owner == 'alexbelgium'
+    if: github.repository_owner == 'tomjansen'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository contents
@@ -25,7 +25,7 @@ jobs:
 
   fix-crlf:
     name: Fix CRLF Endings
-    if: github.repository_owner == 'alexbelgium'
+    if: github.repository_owner == 'tomjansen'
     runs-on: ubuntu-latest # Use a Linux runner
     steps:
       - name: Checkout repository contents

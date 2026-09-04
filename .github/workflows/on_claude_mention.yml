@@ -8,7 +8,7 @@
 # to stay cheap; for anything large or uncertain it hands off to the ai:approved
 # / tier-2 path rather than grinding.
 #
-# Hard-gated to @alexbelgium: only the maintainer's mentions trigger it. This is
+# Hard-gated to @tomjansen: only the maintainer's mentions trigger it. This is
 # the official claude-code-action "tag mode" (no `prompt:` input).
 #
 # Auth: CR_PAT environment (CLAUDE_CODE_OAUTH_TOKEN) + AI_PR_TOKEN as github_token
@@ -36,16 +36,16 @@ jobs:
       (
         (github.event_name == 'issue_comment' &&
          contains(github.event.comment.body, '@claude') &&
-         github.event.comment.user.login == 'alexbelgium') ||
+         github.event.comment.user.login == 'tomjansen') ||
         (github.event_name == 'pull_request_review_comment' &&
          contains(github.event.comment.body, '@claude') &&
-         github.event.comment.user.login == 'alexbelgium') ||
+         github.event.comment.user.login == 'tomjansen') ||
         (github.event_name == 'pull_request_review' &&
          contains(github.event.review.body, '@claude') &&
-         github.event.review.user.login == 'alexbelgium') ||
+         github.event.review.user.login == 'tomjansen') ||
         (github.event_name == 'issues' &&
          (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
-         github.event.issue.user.login == 'alexbelgium')
+         github.event.issue.user.login == 'tomjansen')
       )
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -74,4 +74,4 @@ jobs:
             --effort low
             --max-turns 30
             --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*),Bash(yamllint:*),Bash(docker build:*)"
-            --system-prompt "You are @claude on alexbelgium/hassio-addons, invoked manually by the maintainer, so you take precedence over the automated triage tiers. Each add-on is a thin wrapper around an upstream app. For a small, confident change: make the edit on a branch ai-fix/<addon>-<issue>, run shellcheck on any shell, add a CHANGELOG.md entry, and open a ready PR that Closes the issue. For anything large or uncertain: do NOT grind on it here on Sonnet — post your analysis and recommend applying the ai:approved label (if a tier-2 plan exists) or dispatching the AI fix sweep. Never modify .github/ or .templates/. Never touch the version or upstream fields in config.yaml. Never merge or enable auto-merge."
+            --system-prompt "You are @claude on tomjansen/hassio-addons, invoked manually by the maintainer, so you take precedence over the automated triage tiers. Each add-on is a thin wrapper around an upstream app. For a small, confident change: make the edit on a branch ai-fix/<addon>-<issue>, run shellcheck on any shell, add a CHANGELOG.md entry, and open a ready PR that Closes the issue. For anything large or uncertain: do NOT grind on it here on Sonnet — post your analysis and recommend applying the ai:approved label (if a tier-2 plan exists) or dispatching the AI fix sweep. Never modify .github/ or .templates/. Never touch the version or upstream fields in config.yaml. Never merge or enable auto-merge."

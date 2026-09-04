@@ -29,7 +29,7 @@ jobs:
         stale-pr-label: 'stale'
         days-before-stale: '5'
         days-before-close: '2'
-        # AI triage labels are exempt: an issue waiting on @alexbelgium's
+        # AI triage labels are exempt: an issue waiting on @tomjansen's
         # `ai:approved`, or queued for the tier-2 sweep, must not be auto-closed
         # out from under the pipeline before it is acted on.
         exempt-issue-labels: 'prevent stale,ai-triage,ai:plan-pending,ai:approved,ai:needs-info,ai:needs-human'

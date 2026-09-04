@@ -65,7 +65,7 @@ Key fields in every add-on's `config.yaml`:
 
 ```yaml
 arch: [aarch64, amd64]
-image: ghcr.io/alexbelgium/{slug}-{arch}
+image: ghcr.io/tomjansen/{slug}-{arch}
 version: "X.Y.Z"          # upstream version (format varies; see Versioning section)
 ingress: true/false
 ingress_port: 8000
@@ -107,7 +107,7 @@ When an upstream version is bumped, update `version` in `config.yaml`. If the ad
 {
   "source": "github",           // github|dockerhub|pip|gitlab|bitbucket|helm_chart|...
   "upstream_repo": "owner/repo",
-  "upstream_version": "1.2.3",  // auto-populated by addons_updater
+  "upstream_version": "1.2.3",  // tracks the upstream version boundary
   "slug": "addon_slug",
   "last_update": "2025-01-01",
   "github_beta": false,
@@ -125,8 +125,6 @@ When an upstream version is bumped, update `version` in `config.yaml`. If the ad
 **On PR** (`onpr_check-pr.yaml`): Validates CHANGELOG.md was updated, runs HA addon-linter, and tests Docker build for all changed add-ons.
 
 **Weekly** (`lint.yml`): Runs Super-Linter across the repo, fixes shell formatting with shfmt (4-space indent), opens PRs for automated fixes.
-
-**Weekly** (`weekly_addons_updater`): Runs the `addons_updater` container to bump add-on versions to match upstream.
 
 Other automation workflows:
 - `daily_README.yaml` – Regenerates the root `README.md` add-on table.
@@ -151,7 +149,7 @@ in `.github/scripts/`.
 | `on_issues_ai_triage.yaml` | Sonnet-low | issue opened (+ author reply, daily catch-up) | Tier 1: classify, dedupe, answer, ask for info; label `ai-triage` for real add-on bugs |
 | `daily_ai_fix.yaml` | Opus 5-xhigh | daily 03:00 | Tier 2: diagnose the `ai-triage` batch; small+confident → ready PR (`ai:fixed`); else write a plan (`ai:plan-pending`) |
 | `on_issue_approved.yaml` | Opus 5-high | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
-| `on_claude_mention.yml` | Sonnet-low | `@claude` by @alexbelgium | Manual interactive override on any issue/PR |
+| `on_claude_mention.yml` | Sonnet-low | `@claude` by @tomjansen | Manual interactive override on any issue/PR |
 | `on_pr_coderabbit.yml` | Sonnet-low | CodeRabbit reviews an `ai-fix/*` PR | Once: fix or reply to review comments |
 
 Control labels (`ai:*`) are workflow-owned. Key ones: `ai-triage` (queued for
@@ -162,9 +160,9 @@ out of the automated tiers but not the manual ones. **Kill switch:** set the
 repo variable `AI_DISABLED=true` to pause every AI workflow with no file edits.
 AI fixes must never touch `.github/` or `.templates/` (enforced by
 `ai_guard_paths.sh`). They may edit `config.yaml` freely except the upstream
-part of `version`, and must never edit `updater.json` — `addons_updater` owns
-both. (There is no `upstream:` key in `config.yaml`; upstream tracking lives in
-`updater.json`.) They must still bump the local patch counter so Supervisor
+part of `version`, and must not edit `updater.json` unless explicitly updating
+upstream tracking metadata. (There is no `upstream:` key in `config.yaml`;
+upstream tracking lives in `updater.json`.) They must still bump the local patch counter so Supervisor
 offers the rebuild —
 without it the fix ships inert. The counter boundary comes from
 `updater.json`'s `upstream_version`, never from the shape of `version`: append

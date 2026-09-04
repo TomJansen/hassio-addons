@@ -7,7 +7,7 @@ on:
 
 jobs:
   stats_graphs:
-    if: github.repository_owner == 'alexbelgium'
+    if: github.repository_owner == 'tomjansen'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -111,7 +111,7 @@ jobs:
           # shellcheck disable=SC2013
           for line in $(awk '{ print $1 }' Stats3); do
             TITLE="${line%% *}"
-            FOLDER="$(grep -irl "ghcr.io/alexbelgium/$TITLE-{arch}" --include="config.*" . | xargs -r dirname)"
+            FOLDER="$(grep -irl "ghcr.io/tomjansen/$TITLE-{arch}" --include="config.*" . | xargs -r dirname)"
             FOLDER="${FOLDER:2}"
             echo "$TITLE found in $FOLDER"
             # If non null
@@ -231,11 +231,11 @@ jobs:
         run: |
           echo "Starting run"
           # Get stars
-          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons || true
+          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=tomjansen/hassio-addons || true
           # Get stars2
-          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30 || true
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/tomjansen/hassio-addons?limit=30 || true
           # Get stars evolution
-          wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date" || true
+          wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=tomjansen/hassio-addons&type=Date" || true
       - name: Commit if needed
         uses: EndBug/add-and-commit@v11.1.1
         with:

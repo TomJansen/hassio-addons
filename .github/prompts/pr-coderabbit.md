@@ -47,6 +47,6 @@ Consider only comments authored by `coderabbitai[bot]`. Ignore its collapsed
   (`git push origin HEAD`).
 - Post one summary comment on the PR (`gh pr comment "$PR" --body '...'`) listing
   what you fixed and what you deliberately left, in plain language. End with a
-  note that this is automated and pending @alexbelgium's review.
+  note that this is automated and pending @tomjansen's review.
 - If nothing was actionable, post a one-line comment saying so and stop. Do not
   invent changes to look busy.

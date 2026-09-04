@@ -75,7 +75,7 @@ if ! command -v curl > /dev/null 2> /dev/null; then
 fi
 
 # Call apps installer script if needed
-curl -f -L -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh
+curl -f -L -S "https://raw.githubusercontent.com/tomjansen/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh
 chmod 755 /ha_automatic_packages.sh
 eval /./ha_automatic_packages.sh "${PACKAGES:-}"
 

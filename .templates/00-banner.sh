@@ -45,7 +45,7 @@ else
 fi
 
 bashio::log.blue '-----------------------------------------------------------'
-bashio::log.green ' Provided by: https://github.com/alexbelgium/hassio-addons '
+bashio::log.green ' Provided by: https://github.com/tomjansen/hassio-addons '
 bashio::log.blue '-----------------------------------------------------------'
 
 # Adapt user abc

@@ -168,7 +168,7 @@ fi
 echo ""
 bashio::log.notice "Converting addon options to environment variables"
 bashio::log.notice "Supports custom env_vars"
-bashio::log.notice "https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
+bashio::log.notice "https://github.com/tomjansen/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
 echo ""
 
 ################################################################################

@@ -9,7 +9,7 @@ if ! bashio::supervisor.ping 2>/dev/null; then
   exit 0
 fi
 
-bashio::log.notice "This script is used to mount remote smb/cifs/nfs shares. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons"
+bashio::log.notice "This script is used to mount remote smb/cifs/nfs shares. Instructions here : https://github.com/tomjansen/hassio-addons/wiki/Mounting-remote-shares-in-Addons"
 
 ####################
 # DEFINE FUNCTIONS #

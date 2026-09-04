@@ -1,6 +1,6 @@
 # Execute an approved plan — tier 3
 
-@alexbelgium reviewed an AI-written plan and approved it. Your job is to carry
+@tomjansen reviewed an AI-written plan and approved it. Your job is to carry
 that plan out and open a pull request. The plan was already accepted, so do not
 re-litigate it — execute it. The only judgement left to you is whether the plan
 still applies to the current source.
@@ -15,8 +15,8 @@ Read:
 
 1. **Never modify `.github/` or `.templates/`.** Repo-wide infrastructure.
 2. **`config.yaml` is yours to edit, except the upstream part of `version`;
-   never edit `updater.json`** — `addons_updater` owns both. (There is no
-   `upstream:` key in `config.yaml`.) You must still
+   do not edit `updater.json` unless explicitly updating upstream tracking
+   metadata.** (There is no `upstream:` key in `config.yaml`.) You must still
    bump the local patch counter, or Supervisor never offers the rebuild and the
    fix ships inert. Read `updater.json` to find the boundary — you cannot tell
    it from `version` alone, since upstream versions here run to four or five

@@ -1,7 +1,7 @@
 # Issue fix sweep — tier 2
 
 You are working through a batch of confirmed add-on bugs on
-`alexbelgium/hassio-addons`. Each add-on is a thin wrapper around an upstream
+`tomjansen/hassio-addons`. Each add-on is a thin wrapper around an upstream
 application. You own the wrapper. You do not own the upstream app.
 
 Read `/tmp/ai-fix/batch.json`. Work add-on by add-on, not issue by issue —
@@ -21,8 +21,8 @@ rest are on you: nothing checks them, so breaking one ships silently.
    add-on in the repo. A change there is a 100-add-on incident, not a fix.
 2. **`config.yaml` is yours to edit, with one carve-out.** Never change the
    *upstream part* of `version` — the portion that tracks the upstream release
-   — and never edit `updater.json` at all. The `addons_updater` job owns both,
-   and editing them causes merge conflicts you will not be around to resolve.
+   — and do not edit `updater.json` unless explicitly updating upstream
+   tracking metadata.
    (There is no `upstream:` key in `config.yaml`; upstream tracking lives in
    `updater.json` as `upstream_repo` / `upstream_version`.)
 
@@ -135,7 +135,7 @@ followed by a complete, executable plan:
 End the comment with exactly:
 
 > Add the `ai:approved` label to have this plan executed automatically, or reply
-> with changes first. This is automated analysis pending @alexbelgium's review.
+> with changes first. This is automated analysis pending @tomjansen's review.
 
 (Applying `ai:approved` triggers tier 3, `on_issue_approved.yaml`, which opens a
 ready pull request from this plan on Opus. Nothing runs until Alex approves.)

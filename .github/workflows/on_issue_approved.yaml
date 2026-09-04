@@ -5,12 +5,12 @@
 #
 # Tier 2 (daily_ai_fix.yaml) posts a full `<!-- ai-plan -->` plan on any issue
 # it is not confident enough to fix unattended, and labels it `ai:plan-pending`.
-# When @alexbelgium reviews that plan and applies the `ai:approved` label, this
+# When @tomjansen reviews that plan and applies the `ai:approved` label, this
 # workflow fires within a minute and executes the plan on Opus, opening a
 # ready-for-review pull request — no waiting for the next daily sweep.
 #
 # Manual precedence: the label is the maintainer's explicit go-ahead, so this
-# runs regardless of `no-ai`. Only @alexbelgium may approve; a label applied by
+# runs regardless of `no-ai`. Only @tomjansen may approve; a label applied by
 # anyone else is stripped and ignored (revoke job below).
 #
 # Auth: CR_PAT environment (CLAUDE_CODE_OAUTH_TOKEN) + AI_PR_TOKEN (so the PR
@@ -44,7 +44,7 @@ jobs:
     if: >-
       github.event_name == 'issues' &&
       github.event.label.name == 'ai:approved' &&
-      github.event.sender.login != 'alexbelgium'
+      github.event.sender.login != 'tomjansen'
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -58,18 +58,18 @@ jobs:
           set -euo pipefail
           gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:approved || true
           gh issue comment "$ISSUE" --repo "$REPO" --body \
-            "The \`ai:approved\` label only takes effect when applied by @alexbelgium; removing it."
+            "The \`ai:approved\` label only takes effect when applied by @tomjansen; removing it."
 
   execute:
     # workflow_dispatch is a maintainer override, so it must also be gated to
-    # @alexbelgium — otherwise any collaborator with run-workflow rights could
+    # @tomjansen — otherwise any collaborator with run-workflow rights could
     # execute a Tier 3 plan without the approval label or sender check.
     if: >-
       vars.AI_DISABLED != 'true' &&
       ( ( github.event_name == 'workflow_dispatch' &&
-          github.actor == 'alexbelgium' ) ||
+          github.actor == 'tomjansen' ) ||
         ( github.event.label.name == 'ai:approved' &&
-          github.event.sender.login == 'alexbelgium' ) )
+          github.event.sender.login == 'tomjansen' ) )
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: CR_PAT

@@ -7,7 +7,7 @@ if ! bashio::supervisor.ping 2> /dev/null; then
     exit 0
 fi
 
-bashio::log.notice "This script is used to mount local USB/SATA/SD/NVMe drives. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons"
+bashio::log.notice "This script is used to mount local USB/SATA/SD/NVMe drives. Instructions here : https://github.com/tomjansen/hassio-addons/wiki/Mounting-Local-Drives-in-Addons"
 
 # Available devices
 blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' > availabledisks

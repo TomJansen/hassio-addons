@@ -11,7 +11,7 @@ on:
 jobs:
   # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
   check-addon-changes:
-    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
+    if: ${{ github.repository_owner == 'tomjansen' && !contains(github.event.head_commit.message, 'nobuild') }}
     runs-on: ubuntu-latest
     outputs:
       changedAddons: ${{ steps.find_addons.outputs.changed_addons }}

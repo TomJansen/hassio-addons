@@ -19,7 +19,7 @@ jobs:
         echo "Starting"
 
         # Get issues list
-        curl -s -L https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
+        curl -s -L https://api.github.com/repos/tomjansen/hassio-addons/issues > issueslist
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ] && [ -f "$f"/README.md ]; then
