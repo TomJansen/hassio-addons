@@ -1,4 +1,4 @@
-# Home Assistant Add-on: Lidarr Nightly
+# Home Assistant Add-ons
 
 This repository contains Home Assistant add-ons:
 
@@ -6,6 +6,7 @@ This repository contains Home Assistant add-ons:
 
 - [Lidarr nightly](lidarr/) - Music collection manager for Usenet and BitTorrent users.
 - [Calibre-Web Automated](calibre-web-automated/) - Calibre library web interface with automated ingest and conversion.
+- [Shelfmark](shelfmark/) - Search and request books and audiobooks from multiple sources.
 
 ## Lidarr
 
@@ -20,3 +21,11 @@ conversion, and metadata workflows.
 
 See the [Calibre-Web Automated add-on README](calibre-web-automated/README.md)
 for configuration and storage setup.
+
+## Shelfmark
+
+Shelfmark searches configured sources for books and audiobooks and can send
+completed downloads directly to Calibre-Web Automated for ingestion.
+
+See the [Shelfmark add-on README](shelfmark/README.md) for configuration and
+storage setup.

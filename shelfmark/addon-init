@@ -1,0 +1,47 @@
+#!/bin/sh
+set -eu
+
+options_file=/data/options.json
+python_bin=/app/.venv/bin/python
+
+if [ ! -x "$python_bin" ]; then
+    python_bin=python3
+fi
+
+option() {
+    key="$1"
+    default="$2"
+    value=""
+
+    if [ -r "$options_file" ]; then
+        value="$("$python_bin" - "$options_file" "$key" 2>/dev/null <<'PY' || true
+import json
+import sys
+
+with open(sys.argv[1], encoding="utf-8") as options_file:
+    value = json.load(options_file).get(sys.argv[2])
+
+if value is not None:
+    if isinstance(value, bool):
+        value = str(value).lower()
+    print(value, end="")
+PY
+        )"
+    fi
+
+    if [ -n "$value" ]; then
+        printf '%s' "$value"
+    else
+        printf '%s' "$default"
+    fi
+}
+
+export PUID="$(option PUID 1000)"
+export PGID="$(option PGID 1000)"
+export TZ="$(option TZ UTC)"
+export INGEST_DIR="$(option INGEST_DIR /share/calibre-web-automated/ingest)"
+export SEARCH_MODE="$(option SEARCH_MODE universal)"
+
+mkdir -p "$INGEST_DIR"
+
+exec /app/entrypoint.sh

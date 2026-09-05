@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "amd64": "ghcr.io/calibrain/shelfmark:v1.3.14",
+    "aarch64": "ghcr.io/calibrain/shelfmark:v1.3.14"
+  }
+}
