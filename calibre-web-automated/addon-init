@@ -1,0 +1,34 @@
+#!/bin/sh
+set -eu
+
+options_file=/data/options.json
+
+option() {
+    key="$1"
+    default="$2"
+
+    if [ -r "$options_file" ]; then
+        value="$(jq -er --arg key "$key" '.[$key] // empty' "$options_file" 2>/dev/null || true)"
+        if [ -n "$value" ]; then
+            printf '%s' "$value"
+            return
+        fi
+    fi
+
+    printf '%s' "$default"
+}
+
+export PUID="$(option PUID 1000)"
+export PGID="$(option PGID 1000)"
+export TZ="$(option TZ UTC)"
+export HARDCOVER_TOKEN="$(option HARDCOVER_TOKEN '')"
+export NETWORK_SHARE_MODE="$(option NETWORK_SHARE_MODE false)"
+
+# Keep the add-on's storage locations predictable. Users can choose another
+# supported Home Assistant map in the CWA UI, but these are ready to use.
+mkdir -p \
+    /share/calibre-web-automated/ingest \
+    /share/calibre-web-automated/library \
+    /share/calibre-web-automated/plugins
+
+exec /init

@@ -1,0 +1,32 @@
+name: Calibre-Web Automated
+slug: calibre_web_automated
+version: "1.0.0"
+description: Automated Calibre library management and web interface
+url: https://github.com/tomjansen/hassio-addons/tree/master/calibre-web-automated
+arch:
+  - amd64
+  - aarch64
+image: ghcr.io/tomjansen/calibre_web_automated-{arch}
+init: false
+startup: services
+ports:
+  8083/tcp: 8083
+ports_description:
+  8083/tcp: Web interface
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+webui: "[PROTO:ssl]://[HOST]:[PORT:8083]"
+options:
+  PUID: 1000
+  PGID: 1000
+  TZ: UTC
+  HARDCOVER_TOKEN: ""
+  NETWORK_SHARE_MODE: false
+schema:
+  PUID: int
+  PGID: int
+  TZ: str
+  HARDCOVER_TOKEN: password?
+  NETWORK_SHARE_MODE: bool
