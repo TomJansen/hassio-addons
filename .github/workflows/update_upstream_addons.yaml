@@ -1,0 +1,52 @@
+---
+name: Check upstream add-on releases
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-upstream-addons
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Check releases and update pins
+        id: update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .github/scripts/update_upstream_addons.py
+
+      - name: Create update pull request
+        if: steps.update.outputs.updated == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/upstream-addon-updates
+          delete-branch: true
+          commit-message: Update upstream add-on images
+          title: Update upstream add-on images
+          body: |
+            This automated PR updates add-on wrappers to the latest stable upstream releases.
+
+            Both `linux/amd64` and `linux/arm64` image manifests were verified before making these changes. Merging this PR triggers the normal image build and publish workflow.
+
+            Review the upstream release notes and the add-on build results before installing the update in Home Assistant.
+          labels: dependency-update
+          add-paths: |
+            calibre-web-automated/build.json
+            calibre-web-automated/config.yaml
+            shelfmark/build.json
+            shelfmark/config.yaml

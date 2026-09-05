@@ -19,14 +19,18 @@ paths:
 | CWA path | Home Assistant location | Purpose |
 | --- | --- | --- |
 | `/config` | Add-on configuration storage | CWA settings, backups, and Calibre configuration |
-| `/share/calibre-web-automated/ingest` | `/share` | Put books here for automatic ingestion |
+| `INGEST_DIR` (`/share/cwa-book-ingest`) | `/share` or `/media` | Put books here for automatic ingestion |
 | `/share/calibre-web-automated/library` | `/share` | Default Calibre library location |
 | `/share/calibre-web-automated/plugins` | `/share` | Optional Calibre plugins |
 
-The three `/share` directories are created when the add-on starts. In the CWA
-setup screen, select `/share/calibre-web-automated/library` as the library and
-`/share/calibre-web-automated/ingest` as the ingest directory. You may instead
-use any directory available below `/share` or `/media`.
+The configured ingest directory and the two CWA `/share` directories are
+created when the add-on starts. In the CWA setup screen, select
+`/share/calibre-web-automated/library` as the library. The ingest directory can
+be any subdirectory below `/share` or `/media`.
+
+CWA removes source files after successfully importing them. Always use a
+dedicated ingest directory, never an existing library or general books folder.
+To connect Shelfmark, give both add-ons the same `INGEST_DIR` value.
 
 ## Configuration
 
@@ -35,6 +39,7 @@ use any directory available below `/share` or `/media`.
 | `PUID` | `1000` | User ID CWA uses for file ownership. |
 | `PGID` | `1000` | Group ID CWA uses for file ownership. |
 | `TZ` | `UTC` | Time zone, for example `Europe/Copenhagen`. |
+| `INGEST_DIR` | `/share/cwa-book-ingest` | Dedicated ingest directory shared with download tools such as Shelfmark. |
 | `HARDCOVER_TOKEN` | empty | Optional Hardcover metadata-provider API token. |
 | `NETWORK_SHARE_MODE` | `false` | Enable when the configuration or library is on NFS/SMB storage. |
 

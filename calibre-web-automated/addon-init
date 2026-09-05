@@ -21,13 +21,30 @@ option() {
 export PUID="$(option PUID 1000)"
 export PGID="$(option PGID 1000)"
 export TZ="$(option TZ UTC)"
+export INGEST_DIR="$(option INGEST_DIR /share/cwa-book-ingest)"
 export HARDCOVER_TOKEN="$(option HARDCOVER_TOKEN '')"
 export NETWORK_SHARE_MODE="$(option NETWORK_SHARE_MODE false)"
+
+INGEST_DIR="$(realpath -m -- "$INGEST_DIR")"
+case "$INGEST_DIR" in
+    /share/* | /media/*) ;;
+    *)
+        echo "INGEST_DIR must be a subdirectory of /share or /media" >&2
+        exit 1
+        ;;
+esac
+export INGEST_DIR
+
+# CWA v4 stores this path in dirs.json instead of reading INGEST_DIR.
+dirs_file=/app/calibre-web-automated/dirs.json
+dirs_tmp="${dirs_file}.addon-init"
+jq --arg path "$INGEST_DIR" '.ingest_folder = $path' "$dirs_file" > "$dirs_tmp"
+mv "$dirs_tmp" "$dirs_file"
 
 # Keep the add-on's storage locations predictable. Users can choose another
 # supported Home Assistant map in the CWA UI, but these are ready to use.
 mkdir -p \
-    /share/calibre-web-automated/ingest \
+    "$INGEST_DIR" \
     /share/calibre-web-automated/library \
     /share/calibre-web-automated/plugins
 

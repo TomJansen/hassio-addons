@@ -39,7 +39,7 @@ PY
 export PUID="$(option PUID 1000)"
 export PGID="$(option PGID 1000)"
 export TZ="$(option TZ UTC)"
-export INGEST_DIR="$(option INGEST_DIR /share/calibre-web-automated/ingest)"
+export INGEST_DIR="$(option INGEST_DIR /share/cwa-book-ingest)"
 export SEARCH_MODE="$(option SEARCH_MODE universal)"
 
 mkdir -p "$INGEST_DIR"

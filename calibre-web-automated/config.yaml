@@ -1,6 +1,6 @@
 name: Calibre-Web Automated
 slug: calibre_web_automated
-version: "1.0.3"
+version: "1.0.4"
 description: Automated Calibre library management and web interface
 url: https://github.com/tomjansen/hassio-addons/tree/master/calibre-web-automated
 arch:
@@ -22,11 +22,13 @@ options:
   PUID: 1000
   PGID: 1000
   TZ: UTC
+  INGEST_DIR: /share/cwa-book-ingest
   HARDCOVER_TOKEN: ""
   NETWORK_SHARE_MODE: false
 schema:
   PUID: int
   PGID: int
   TZ: str
+  INGEST_DIR: str
   HARDCOVER_TOKEN: password?
   NETWORK_SHARE_MODE: bool

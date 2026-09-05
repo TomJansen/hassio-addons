@@ -1,6 +1,6 @@
 name: Shelfmark
 slug: shelfmark
-version: "1.0.0"
+version: "1.0.1"
 description: Search for and request books and audiobooks from multiple sources
 url: https://github.com/tomjansen/hassio-addons/tree/master/shelfmark
 arch:
@@ -23,7 +23,7 @@ options:
   PUID: 1000
   PGID: 1000
   TZ: UTC
-  INGEST_DIR: /share/calibre-web-automated/ingest
+  INGEST_DIR: /share/cwa-book-ingest
   SEARCH_MODE: universal
 schema:
   PUID: int

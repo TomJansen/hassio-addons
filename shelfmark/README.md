@@ -16,7 +16,7 @@ audiobooks from configurable web, torrent, Usenet, and IRC sources.
 | Shelfmark path | Home Assistant location | Purpose |
 | --- | --- | --- |
 | `/config` | Add-on configuration storage | Settings, database, and artwork cache |
-| `/share/calibre-web-automated/ingest` | `/share` | Default destination for downloaded books |
+| `/share/cwa-book-ingest` | `/share` | Default destination for downloaded books |
 | `/share` | Home Assistant shared storage | Other selectable download destinations |
 | `/media` | Home Assistant media storage | Other selectable download destinations |
 
@@ -36,7 +36,7 @@ both add-ons.
 | `PUID` | `1000` | User ID Shelfmark uses for file ownership. |
 | `PGID` | `1000` | Group ID Shelfmark uses for file ownership. |
 | `TZ` | `UTC` | Time zone, for example `Europe/Copenhagen`. |
-| `INGEST_DIR` | `/share/calibre-web-automated/ingest` | Default book download destination. |
+| `INGEST_DIR` | `/share/cwa-book-ingest` | Default book download destination, shared with CWA. |
 | `SEARCH_MODE` | `universal` | Use `universal` metadata search or query sources with `direct`. |
 
 Most source, authentication, notification, and download-client settings are
