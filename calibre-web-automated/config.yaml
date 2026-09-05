@@ -1,6 +1,6 @@
 name: Calibre-Web Automated
 slug: calibre_web_automated
-version: "1.0.0"
+version: "1.0.2"
 description: Automated Calibre library management and web interface
 url: https://github.com/tomjansen/hassio-addons/tree/master/calibre-web-automated
 arch:
