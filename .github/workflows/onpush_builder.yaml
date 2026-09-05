@@ -23,6 +23,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Resolve comparison base
+        id: compare
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
+            base="$BEFORE"
+          elif git rev-parse --verify "${AFTER}^" >/dev/null 2>&1; then
+            base="$(git rev-parse "${AFTER}^")"
+            echo "::warning::Previous push SHA is unavailable; comparing with the pushed commit's parent."
+          else
+            base="$(git hash-object -t tree -w /dev/null)"
+            echo "::warning::No parent commit is available; comparing with an empty tree."
+          fi
+          echo "base=$base" >> "$GITHUB_OUTPUT"
       # The aarch64 image is built on this x86 runner, so BuildKit needs
       # binfmt/QEMU in order to execute RUN instructions from the ARM base.
       - name: Set up QEMU
@@ -35,7 +53,7 @@ jobs:
         run: python3 -m pip install --disable-pip-version-check pyyaml
       - name: Find version changes and build images
         env:
-          BEFORE: ${{ github.event.before }}
+          BEFORE: ${{ steps.compare.outputs.base }}
           AFTER: ${{ github.sha }}
         shell: bash
         run: |
@@ -53,7 +71,7 @@ jobs:
         id: changed
       - name: Build changed images
         env:
-          BEFORE: ${{ github.event.before }}
+          BEFORE: ${{ steps.compare.outputs.base }}
           AFTER: ${{ github.sha }}
         shell: bash
         run: |
