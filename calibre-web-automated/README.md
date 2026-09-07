@@ -56,4 +56,4 @@ port mapping.
 
 - Add-on repository: https://github.com/tomjansen/hassio-addons
 - Upstream project: https://github.com/TomJansen/Calibre-Web-Automated
-- Base image: `ghcr.io/tomjansen/calibre-web-automated:sha-5914184`
+- Base image: `ghcr.io/tomjansen/calibre-web-automated:sha-0b26e2a`

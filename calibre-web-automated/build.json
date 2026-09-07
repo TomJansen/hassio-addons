@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "amd64": "ghcr.io/tomjansen/calibre-web-automated:sha-5914184",
-    "aarch64": "ghcr.io/tomjansen/calibre-web-automated:sha-5914184"
+    "amd64": "ghcr.io/tomjansen/calibre-web-automated:sha-0b26e2a",
+    "aarch64": "ghcr.io/tomjansen/calibre-web-automated:sha-0b26e2a"
   }
 }
