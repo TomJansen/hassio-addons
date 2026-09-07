@@ -35,17 +35,59 @@ case "$INGEST_DIR" in
 esac
 export INGEST_DIR
 
-# CWA v4 stores this path in dirs.json instead of reading INGEST_DIR.
-dirs_file=/app/calibre-web-automated/dirs.json
-dirs_tmp="${dirs_file}.addon-init"
-jq --arg path "$INGEST_DIR" '.ingest_folder = $path' "$dirs_file" > "$dirs_tmp"
-mv "$dirs_tmp" "$dirs_file"
-
-# Keep the add-on's storage locations predictable. Users can choose another
-# supported Home Assistant map in the CWA UI, but these are ready to use.
+# The upstream auto-library service only manages /calibre-library, which is an
+# image volume and is not retained when Supervisor recreates the container.
+# Seed and select the add-on's persistent library instead.
+persistent_library_dir=/share/calibre-web-automated/library
 mkdir -p \
     "$INGEST_DIR" \
-    /share/calibre-web-automated/library \
+    "$persistent_library_dir" \
     /share/calibre-web-automated/plugins
+
+if [ ! -f "$persistent_library_dir/metadata.db" ]; then
+    cp /app/calibre-web-automated/empty_library/metadata.db \
+        "$persistent_library_dir/metadata.db"
+fi
+
+if [ ! -f /config/app.db ]; then
+    cp /app/calibre-web-automated/empty_library/app.db /config/app.db
+fi
+
+library_dir="$(sqlite3 /config/app.db \
+    'SELECT config_calibre_dir FROM settings LIMIT 1;' 2>/dev/null || true)"
+case "$library_dir" in
+    '' | /calibre-library | /calibre-library/)
+        library_dir="$persistent_library_dir"
+        sqlite3 /config/app.db \
+            "UPDATE settings SET config_calibre_dir='$persistent_library_dir';"
+        ;;
+esac
+chown "$PUID:$PGID" /config/app.db
+export DISABLE_LIBRARY_AUTOMOUNT=true
+
+# CWA v4 keeps active storage paths in dirs.json. The bundled file lives in
+# /app and is lost whenever Supervisor recreates the container, so keep the
+# active copy in the add-on's persistent configuration volume instead.
+bundled_dirs_file=/app/calibre-web-automated/dirs.json
+dirs_file=/config/dirs.json
+dirs_tmp="${dirs_file}.addon-init"
+
+if [ ! -f "$dirs_file" ]; then
+    cp "$bundled_dirs_file" "$dirs_file"
+
+    # Existing installs already have the selected library in app.db. Preserve
+    # it when migrating dirs.json into persistent storage for the first time.
+    if [ -n "$library_dir" ]; then
+        jq --arg path "$library_dir" \
+            '.calibre_library_dir = $path' "$dirs_file" > "$dirs_tmp"
+        mv "$dirs_tmp" "$dirs_file"
+    fi
+fi
+
+jq --arg path "$INGEST_DIR" '.ingest_folder = $path' "$dirs_file" > "$dirs_tmp"
+mv "$dirs_tmp" "$dirs_file"
+chown "$PUID:$PGID" "$dirs_file"
+chmod 0644 "$dirs_file"
+ln -sfn "$dirs_file" "$bundled_dirs_file"
 
 exec /init

@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/tomjansen/calibre-web-automated:latest
+ARG BUILD_FROM=ghcr.io/tomjansen/calibre-web-automated:sha-5914184
 FROM ${BUILD_FROM}
 
 LABEL \

@@ -18,7 +18,7 @@ paths:
 
 | CWA path | Home Assistant location | Purpose |
 | --- | --- | --- |
-| `/config` | Add-on configuration storage | CWA settings, backups, and Calibre configuration |
+| `/config` | Add-on configuration storage | CWA settings, database paths, backups, and Calibre configuration |
 | `INGEST_DIR` (`/share/cwa-book-ingest`) | `/share` or `/media` | Put books here for automatic ingestion |
 | `/share/calibre-web-automated/library` | `/share` | Default Calibre library location |
 | `/share/calibre-web-automated/plugins` | `/share` | Optional Calibre plugins |
@@ -27,6 +27,9 @@ The configured ingest directory and the two CWA `/share` directories are
 created when the add-on starts. In the CWA setup screen, select
 `/share/calibre-web-automated/library` as the library. The ingest directory can
 be any subdirectory below `/share` or `/media`.
+
+CWA's selected library and ingest paths are retained in `/config/dirs.json`, so
+they survive add-on restarts, updates, and container recreation.
 
 CWA removes source files after successfully importing them. Always use a
 dedicated ingest directory, never an existing library or general books folder.
@@ -53,4 +56,4 @@ port mapping.
 
 - Add-on repository: https://github.com/tomjansen/hassio-addons
 - Upstream project: https://github.com/TomJansen/Calibre-Web-Automated
-- Base image: `ghcr.io/tomjansen/calibre-web-automated:latest`
+- Base image: `ghcr.io/tomjansen/calibre-web-automated:sha-5914184`
