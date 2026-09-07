@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "amd64": "crocodilestick/calibre-web-automated:v4.0.6",
-    "aarch64": "crocodilestick/calibre-web-automated:v4.0.6"
+    "amd64": "ghcr.io/tomjansen/calibre-web-automated:latest",
+    "aarch64": "ghcr.io/tomjansen/calibre-web-automated:latest"
   }
 }

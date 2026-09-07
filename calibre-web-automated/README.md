@@ -52,5 +52,5 @@ port mapping.
 ## Source
 
 - Add-on repository: https://github.com/tomjansen/hassio-addons
-- Upstream project: https://github.com/crocodilestick/Calibre-Web-Automated
-- Upstream image: `crocodilestick/calibre-web-automated:v4.0.6`
+- Upstream project: https://github.com/TomJansen/Calibre-Web-Automated
+- Base image: `ghcr.io/tomjansen/calibre-web-automated:latest`

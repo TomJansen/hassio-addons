@@ -23,13 +23,15 @@ class Addon:
     directory: str
     repository: str
     image: str
+    rolling: bool = False
 
 
 ADDONS = (
     Addon(
         directory="calibre-web-automated",
-        repository="crocodilestick/Calibre-Web-Automated",
-        image="crocodilestick/calibre-web-automated",
+        repository="TomJansen/Calibre-Web-Automated",
+        image="ghcr.io/tomjansen/calibre-web-automated",
+        rolling=True,
     ),
     Addon(
         directory="shelfmark",
@@ -168,6 +170,11 @@ def main() -> int:
     token = os.environ.get("GITHUB_TOKEN")
 
     for addon in ADDONS:
+        # Locally maintained rolling images are rebuilt directly from their
+        # default branch and do not have an upstream release pin to advance.
+        if addon.rolling:
+            continue
+
         build_path = args.root / addon.directory / "build.json"
         config_path = args.root / addon.directory / "config.yaml"
         build = json.loads(build_path.read_text())
