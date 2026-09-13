@@ -39,6 +39,20 @@ stored under `/share` or `/media` must be backed up separately.
 | `PUID` | `1000` | User ID Stump uses for file ownership. |
 | `PGID` | `1000` | Group ID Stump uses for file ownership. |
 | `TZ` | `UTC` | Time zone, for example `Europe/Copenhagen`. |
+| `ENV_VARS` | empty | Additional environment variables passed to Stump. |
+
+Add environment variables as name/value entries in `ENV_VARS`:
+
+```yaml
+ENV_VARS:
+  - name: RUST_LOG
+    value: stump_server=debug
+```
+
+`PUID`, `PGID`, `TZ`, `PATH`, `LD_PRELOAD`, `LD_LIBRARY_PATH`,
+`STUMP_CONFIG_DIR`, `STUMP_CLIENT_DIR`, `STUMP_PORT`, `STUMP_IN_DOCKER`, and
+`PDFIUM_PATH` are managed by the add-on and cannot be overridden through
+`ENV_VARS`.
 
 The web server listens on port `10801`; Home Assistant controls the host port
 mapping.

@@ -9,14 +9,7 @@ option() {
     value=""
 
     if [ -r "$options_file" ]; then
-        # Home Assistant writes a flat JSON object here. These options are
-        # deliberately limited to numbers and a timezone string without JSON
-        # escapes, so BusyBox sed is sufficient in Stump's minimal image.
-        value="$(
-            tr -d '\r\n' < "$options_file" \
-                | sed -n "s/.*\"${key}\"[[:space:]]*:[[:space:]]*\(\"\([^\"]*\)\"\|\([^,}]*\)\).*/\2\3/p" \
-                | sed 's/[[:space:]]*$//'
-        )"
+        value="$(jq -er --arg key "$key" '.[$key] // empty' "$options_file" 2>/dev/null || true)"
     fi
 
     if [ -n "$value" ]; then
@@ -29,6 +22,30 @@ option() {
 export PUID="$(option PUID 1000)"
 export PGID="$(option PGID 1000)"
 export TZ="$(option TZ UTC)"
+
+if [ -r "$options_file" ]; then
+    env_count="$(jq -r '.ENV_VARS // [] | length' "$options_file")"
+    env_index=0
+    while [ "$env_index" -lt "$env_count" ]; do
+        env_name="$(jq -r --argjson index "$env_index" '.ENV_VARS[$index].name' "$options_file")"
+        env_value="$(jq -r --argjson index "$env_index" '.ENV_VARS[$index].value' "$options_file")"
+
+        case "$env_name" in
+            '' | [0-9]* | *[!A-Za-z0-9_]*)
+                echo "Invalid environment variable name: $env_name" >&2
+                exit 1
+                ;;
+            PUID | PGID | TZ | PATH | LD_PRELOAD | LD_LIBRARY_PATH | \
+                STUMP_CONFIG_DIR | STUMP_CLIENT_DIR | STUMP_PORT | STUMP_IN_DOCKER | PDFIUM_PATH)
+                echo "$env_name is managed by the Stump add-on and cannot be overridden in ENV_VARS." >&2
+                exit 1
+                ;;
+        esac
+
+        export "$env_name=$env_value"
+        env_index=$((env_index + 1))
+    done
+fi
 
 mkdir -p /config /share/stump/books
 
