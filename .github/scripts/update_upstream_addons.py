@@ -23,15 +23,15 @@ class Addon:
     directory: str
     repository: str
     image: str
-    rolling: bool = False
+    strip_release_v: bool = False
 
 
 ADDONS = (
     Addon(
-        directory="calibre-web-automated",
-        repository="TomJansen/Calibre-Web-Automated",
-        image="ghcr.io/tomjansen/calibre-web-automated",
-        rolling=True,
+        directory="stump",
+        repository="stumpapp/stump",
+        image="docker.io/aaronleopold/stump",
+        strip_release_v=True,
     ),
     Addon(
         directory="shelfmark",
@@ -170,11 +170,6 @@ def main() -> int:
     token = os.environ.get("GITHUB_TOKEN")
 
     for addon in ADDONS:
-        # Locally maintained rolling images are rebuilt directly from their
-        # default branch and do not have an upstream release pin to advance.
-        if addon.rolling:
-            continue
-
         build_path = args.root / addon.directory / "build.json"
         config_path = args.root / addon.directory / "config.yaml"
         build = json.loads(build_path.read_text())
@@ -184,7 +179,8 @@ def main() -> int:
         if version_tuple(available) <= version_tuple(installed):
             continue
 
-        reference = f"{addon.image}:{available}"
+        image_tag = available.removeprefix("v") if addon.strip_release_v else available
+        reference = f"{addon.image}:{image_tag}"
         if not args.no_verify_images:
             try:
                 platforms = image_platforms(reference)

@@ -46,7 +46,7 @@ jobs:
             Review the upstream release notes and the add-on build results before installing the update in Home Assistant.
           labels: dependency-update
           add-paths: |
-            calibre-web-automated/build.json
-            calibre-web-automated/config.yaml
+            stump/build.json
+            stump/config.yaml
             shelfmark/build.json
             shelfmark/config.yaml

@@ -1,0 +1,28 @@
+name: Stump
+slug: stump
+version: "1.0.0"
+description: Comics, manga, and digital book server with OPDS support
+url: https://github.com/tomjansen/hassio-addons/tree/master/stump
+arch:
+  - amd64
+  - aarch64
+image: ghcr.io/tomjansen/stump-{arch}
+init: false
+startup: services
+ports:
+  10801/tcp: 10801
+ports_description:
+  10801/tcp: Web interface
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+webui: "http://[HOST]:[PORT:10801]"
+options:
+  PUID: 1000
+  PGID: 1000
+  TZ: UTC
+schema:
+  PUID: int
+  PGID: int
+  TZ: str

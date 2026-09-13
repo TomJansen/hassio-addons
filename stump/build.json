@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "amd64": "docker.io/aaronleopold/stump:0.1.5",
+    "aarch64": "docker.io/aaronleopold/stump:0.1.5"
+  }
+}

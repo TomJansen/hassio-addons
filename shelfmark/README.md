@@ -16,14 +16,15 @@ audiobooks from configurable web, torrent, Usenet, and IRC sources.
 | Shelfmark path | Home Assistant location | Purpose |
 | --- | --- | --- |
 | `/config` | Add-on configuration storage | Settings, database, and artwork cache |
-| `/share/cwa-book-ingest` | `/share` | Default destination for downloaded books |
+| `/share/stump/books` | `/share` | Default destination for downloaded books |
 | `/share` | Home Assistant shared storage | Other selectable download destinations |
 | `/media` | Home Assistant media storage | Other selectable download destinations |
 
-The default destination is shared with the Calibre-Web Automated add-on, so
-completed books can be imported automatically. Shelfmark creates the directory
-when it starts. Change `INGEST_DIR` if you use a different library application
-or storage layout.
+The default destination is Stump's library folder. Shelfmark creates the
+directory when it starts, and Stump discovers completed books when the library
+is scanned. Change `INGEST_DIR` if you use a different library application or
+storage layout. Existing Shelfmark installations retain their configured path;
+change it manually when switching to Stump's library folder.
 
 Torrent and Usenet clients must see completed downloads at the same path that
 Shelfmark uses. Choose a path under `/share` or `/media` that is available to
@@ -36,7 +37,7 @@ both add-ons.
 | `PUID` | `1000` | User ID Shelfmark uses for file ownership. |
 | `PGID` | `1000` | Group ID Shelfmark uses for file ownership. |
 | `TZ` | `UTC` | Time zone, for example `Europe/Copenhagen`. |
-| `INGEST_DIR` | `/share/cwa-book-ingest` | Default book download destination, shared with CWA. |
+| `INGEST_DIR` | `/share/stump/books` | Default book download destination, shared with Stump. |
 | `SEARCH_MODE` | `universal` | Use `universal` metadata search or query sources with `direct`. |
 
 Most source, authentication, notification, and download-client settings are

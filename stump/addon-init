@@ -1,0 +1,35 @@
+#!/busybox/sh
+set -eu
+
+options_file=/data/options.json
+
+option() {
+    key="$1"
+    default="$2"
+    value=""
+
+    if [ -r "$options_file" ]; then
+        # Home Assistant writes a flat JSON object here. These options are
+        # deliberately limited to numbers and a timezone string without JSON
+        # escapes, so BusyBox sed is sufficient in Stump's minimal image.
+        value="$(
+            tr -d '\r\n' < "$options_file" \
+                | sed -n "s/.*\"${key}\"[[:space:]]*:[[:space:]]*\(\"\([^\"]*\)\"\|\([^,}]*\)\).*/\2\3/p" \
+                | sed 's/[[:space:]]*$//'
+        )"
+    fi
+
+    if [ -n "$value" ]; then
+        printf '%s' "$value"
+    else
+        printf '%s' "$default"
+    fi
+}
+
+export PUID="$(option PUID 1000)"
+export PGID="$(option PGID 1000)"
+export TZ="$(option TZ UTC)"
+
+mkdir -p /config /share/stump/books
+
+exec /entrypoint.sh "$@"
