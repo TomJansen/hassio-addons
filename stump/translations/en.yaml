@@ -1,0 +1,4 @@
+configuration:
+  ENV_VARS:
+    name: ENV VARS
+    description: Enter one NAME=value environment variable per line.

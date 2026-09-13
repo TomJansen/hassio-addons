@@ -1,6 +1,6 @@
 name: Stump
 slug: stump
-version: "1.0.1"
+version: "1.0.2"
 description: Comics, manga, and digital book server with OPDS support
 url: https://github.com/tomjansen/hassio-addons/tree/master/stump
 arch:
@@ -22,11 +22,9 @@ options:
   PUID: 1000
   PGID: 1000
   TZ: UTC
-  ENV_VARS: []
+  ENV_VARS: ""
 schema:
   PUID: int
   PGID: int
   TZ: str
-  ENV_VARS:
-    - name: str
-      value: str
+  ENV_VARS: str
