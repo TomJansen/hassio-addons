@@ -41,14 +41,14 @@ stored under `/share` or `/media` must be backed up separately.
 | `TZ` | `UTC` | Time zone, for example `Europe/Copenhagen`. |
 | `ENV_VARS` | empty | Additional environment variables passed to Stump. |
 
-Enter one `NAME=value` assignment per line in the single `ENV_VARS` text box.
-Blank lines and lines beginning with `#` are ignored:
+Enter `NAME=value` assignments separated by semicolons in the single `ENV_VARS`
+text box. Do not use newlines or spaces around the semicolons:
 
 ```yaml
-ENV_VARS: |-
-  RUST_LOG=stump_server=debug
-  CUSTOM_STUMP_SETTING=value with spaces
+ENV_VARS: "ENABLE_KOBO_SYNC=true;STUMP_VERBOSITY=2"
 ```
+
+Values may contain spaces, but cannot contain semicolons.
 
 `PUID`, `PGID`, `TZ`, `PATH`, `LD_PRELOAD`, `LD_LIBRARY_PATH`,
 `STUMP_CONFIG_DIR`, `STUMP_CLIENT_DIR`, `STUMP_PORT`, `STUMP_IN_DOCKER`, and
