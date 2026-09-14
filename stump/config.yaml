@@ -1,6 +1,6 @@
 name: Stump
 slug: stump
-version: "1.0.3"
+version: "1.0.4"
 description: Comics, manga, and digital book server with OPDS support
 url: https://github.com/tomjansen/hassio-addons/tree/master/stump
 arch:

@@ -1,4 +1,4 @@
-ARG BUILD_FROM=docker.io/aaronleopold/stump:0.1.5
+ARG BUILD_FROM=docker.io/aaronleopold/stump:0.1.7
 FROM ghcr.io/jqlang/jq:1.8.1 AS jq
 FROM ${BUILD_FROM}
 

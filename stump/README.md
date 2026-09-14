@@ -66,4 +66,4 @@ before upgrading and review upstream release notes for migration warnings.
 - Add-on repository: https://github.com/tomjansen/hassio-addons
 - Upstream project: https://github.com/stumpapp/stump
 - Upstream documentation: https://www.stumpapp.dev/docs/getting-started/installation/docker
-- Base image: `docker.io/aaronleopold/stump:0.1.5`
+- Base image: `docker.io/aaronleopold/stump:0.1.7`
