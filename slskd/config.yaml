@@ -1,0 +1,45 @@
+name: slskd
+slug: slskd
+version: "1.0.0"
+description: Web-based Soulseek client for searching, sharing, and downloading files
+url: https://github.com/tomjansen/hassio-addons/tree/master/slskd
+arch:
+  - amd64
+  - aarch64
+image: ghcr.io/tomjansen/slskd-{arch}
+init: false
+startup: services
+ports:
+  5030/tcp: 5030
+  5031/tcp: 5031
+  50300/tcp: 50300
+ports_description:
+  5030/tcp: Web interface (HTTP)
+  5031/tcp: Web interface (HTTPS, self-signed certificate)
+  50300/tcp: Soulseek incoming connections
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+webui: "http://[HOST]:[PORT:5030]"
+watchdog: "http://[HOST]:[PORT:5030]/health"
+options:
+  PUID: 1000
+  PGID: 1000
+  TZ: UTC
+  UMASK: "0022"
+  REMOTE_CONFIGURATION: true
+  REMOTE_FILE_MANAGEMENT: false
+  DOWNLOADS_DIR: /share/slskd/downloads
+  INCOMPLETE_DIR: /share/slskd/incomplete
+  SHARED_DIRS: ""
+schema:
+  PUID: int
+  PGID: int
+  TZ: str
+  UMASK: str
+  REMOTE_CONFIGURATION: bool
+  REMOTE_FILE_MANAGEMENT: bool
+  DOWNLOADS_DIR: str
+  INCOMPLETE_DIR: str
+  SHARED_DIRS: str

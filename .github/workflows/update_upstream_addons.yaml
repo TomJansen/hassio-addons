@@ -50,3 +50,5 @@ jobs:
             stump/config.yaml
             shelfmark/build.json
             shelfmark/config.yaml
+            slskd/build.json
+            slskd/config.yaml

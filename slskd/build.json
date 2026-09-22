@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "amd64": "ghcr.io/slskd/slskd:0.26.0",
+    "aarch64": "ghcr.io/slskd/slskd:0.26.0"
+  }
+}

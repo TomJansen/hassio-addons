@@ -28,6 +28,11 @@ class Addon:
 
 ADDONS = (
     Addon(
+        directory="slskd",
+        repository="slskd/slskd",
+        image="ghcr.io/slskd/slskd",
+    ),
+    Addon(
         directory="stump",
         repository="stumpapp/stump",
         image="docker.io/aaronleopold/stump",

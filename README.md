@@ -7,6 +7,7 @@ This repository contains Home Assistant add-ons:
 - [Lidarr nightly](lidarr/) - Music collection manager for Usenet and BitTorrent users.
 - [Stump](stump/) - Comics, manga, and digital book server with OPDS support.
 - [Shelfmark](shelfmark/) - Search and request books and audiobooks from multiple sources.
+- [slskd](slskd/) - Web-based Soulseek client for searching, sharing, and downloading files.
 
 ## Lidarr
 
@@ -30,3 +31,12 @@ completed book downloads to Stump's library folder.
 
 See the [Shelfmark add-on README](shelfmark/README.md) for configuration and
 storage setup.
+
+## slskd
+
+slskd is a web-based Soulseek client for searching, downloading, sharing, and
+chat. It stores application data in add-on configuration storage and downloads
+to Home Assistant shared storage by default.
+
+See the [slskd add-on README](slskd/README.md) for configuration, storage, and
+port-forwarding details.

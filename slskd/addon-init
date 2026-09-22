@@ -1,0 +1,47 @@
+#!/bin/bash
+set -euo pipefail
+
+options_file=/data/options.json
+
+option() {
+    local key="$1"
+    local default="$2"
+    local value=""
+
+    if [[ -r "$options_file" ]]; then
+        value="$(jq -r --arg key "$key" \
+            'if has($key) and .[$key] != null then .[$key] else empty end' \
+            "$options_file")"
+    fi
+
+    if [[ -n "$value" ]]; then
+        printf '%s' "$value"
+    else
+        printf '%s' "$default"
+    fi
+}
+
+export PUID="$(option PUID 1000)"
+export PGID="$(option PGID 1000)"
+export TZ="$(option TZ UTC)"
+export SLSKD_UMASK="$(option UMASK 0022)"
+export SLSKD_REMOTE_CONFIGURATION="$(option REMOTE_CONFIGURATION true)"
+export SLSKD_REMOTE_FILE_MANAGEMENT="$(option REMOTE_FILE_MANAGEMENT false)"
+export SLSKD_APP_DIR=/config
+export SLSKD_DOWNLOADS_DIR="$(option DOWNLOADS_DIR /share/slskd/downloads)"
+export SLSKD_INCOMPLETE_DIR="$(option INCOMPLETE_DIR /share/slskd/incomplete)"
+
+shared_dirs="$(option SHARED_DIRS '')"
+if [[ -n "$shared_dirs" ]]; then
+    export SLSKD_SHARED_DIR="$shared_dirs"
+fi
+
+mkdir -p "$SLSKD_APP_DIR" "$SLSKD_DOWNLOADS_DIR" "$SLSKD_INCOMPLETE_DIR"
+
+# The upstream entrypoint only adjusts ownership of the application directory.
+# Ensure the add-on-created download directories are writable by the selected user.
+if [[ "$(id -u)" -eq 0 ]] && [[ "$PUID" =~ ^[0-9]+$ ]] && [[ "$PGID" =~ ^[0-9]+$ ]]; then
+    chown "$PUID:$PGID" "$SLSKD_DOWNLOADS_DIR" "$SLSKD_INCOMPLETE_DIR"
+fi
+
+exec /entrypoint.sh "$@"
