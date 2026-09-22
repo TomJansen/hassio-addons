@@ -1,6 +1,6 @@
 name: slskd
 slug: slskd
-version: "1.0.0"
+version: "1.0.1"
 description: Web-based Soulseek client for searching, sharing, and downloading files
 url: https://github.com/tomjansen/hassio-addons/tree/master/slskd
 arch:
@@ -30,6 +30,8 @@ options:
   UMASK: "0022"
   REMOTE_CONFIGURATION: true
   REMOTE_FILE_MANAGEMENT: false
+  SLSK_USERNAME: ""
+  SLSK_PASSWORD: ""
   DOWNLOADS_DIR: /share/slskd/downloads
   INCOMPLETE_DIR: /share/slskd/incomplete
   SHARED_DIRS: ""
@@ -40,6 +42,8 @@ schema:
   UMASK: str
   REMOTE_CONFIGURATION: bool
   REMOTE_FILE_MANAGEMENT: bool
+  SLSK_USERNAME: str
+  SLSK_PASSWORD: password
   DOWNLOADS_DIR: str
   INCOMPLETE_DIR: str
   SHARED_DIRS: str

@@ -8,9 +8,10 @@ supports searching, downloading, sharing, chat, and API-based integrations.
 1. Add this repository to the Home Assistant add-on store:
    [![Add repository on my Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Ftomjansen%2Fhassio-addons)
 1. Install `slskd`.
-1. Configure and start the add-on.
+1. Enter your Soulseek username and password in the add-on options, then start
+   the add-on.
 1. Open the web UI and immediately change the default `slskd`/`slskd` web
-   credentials, then enter your Soulseek credentials.
+   credentials.
 
 ## Storage
 
@@ -35,6 +36,8 @@ Application state under `/config` is included in add-on backups. Files under
 | `UMASK` | `0022` | Permission mask used when slskd creates files. |
 | `REMOTE_CONFIGURATION` | `true` | Allow configuration through the web UI. |
 | `REMOTE_FILE_MANAGEMENT` | `false` | Allow files to be deleted through the API and web UI. |
+| `SLSK_USERNAME` | empty | Soulseek network username. |
+| `SLSK_PASSWORD` | empty | Soulseek network password (masked in the add-on options). |
 | `DOWNLOADS_DIR` | `/share/slskd/downloads` | Completed download directory. |
 | `INCOMPLETE_DIR` | `/share/slskd/incomplete` | Incomplete download directory. |
 | `SHARED_DIRS` | empty | Semicolon-separated directories to share, such as `/media/music;/share/books`. |
@@ -42,6 +45,13 @@ Application state under `/config` is included in add-on backups. Files under
 Sharing is disabled by default. Only add directories whose contents you intend
 to make available to other Soulseek users. You can configure shares and most
 other settings in the web UI while `REMOTE_CONFIGURATION` is enabled.
+
+The Soulseek credentials are separate from the web UI login. Leave the add-on
+fields empty to keep credentials configured in slskd's web UI or `slskd.yml`.
+slskd's YAML configuration takes precedence over environment variables, so
+credentials already saved in `slskd.yml` may need to be removed there before
+changes to these add-on options take effect. Changing Soulseek credentials
+requires resetting the Soulseek connection.
 
 The web interface is available over HTTP on port `5030` and HTTPS with a
 self-signed certificate on port `5031`. Soulseek listens for incoming TCP

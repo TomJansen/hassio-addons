@@ -31,6 +31,15 @@ export SLSKD_APP_DIR=/config
 export SLSKD_DOWNLOADS_DIR="$(option DOWNLOADS_DIR /share/slskd/downloads)"
 export SLSKD_INCOMPLETE_DIR="$(option INCOMPLETE_DIR /share/slskd/incomplete)"
 
+slsk_username="$(option SLSK_USERNAME '')"
+slsk_password="$(option SLSK_PASSWORD '')"
+if [[ -n "$slsk_username" ]]; then
+    export SLSKD_SLSK_USERNAME="$slsk_username"
+fi
+if [[ -n "$slsk_password" ]]; then
+    export SLSKD_SLSK_PASSWORD="$slsk_password"
+fi
+
 shared_dirs="$(option SHARED_DIRS '')"
 if [[ -n "$shared_dirs" ]]; then
     export SLSKD_SHARED_DIR="$shared_dirs"
