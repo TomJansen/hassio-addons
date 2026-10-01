@@ -6,6 +6,7 @@ This repository contains Home Assistant add-ons:
 
 - [Lidarr nightly](lidarr/) - Music collection manager for Usenet and BitTorrent users.
 - [Stump](stump/) - Comics, manga, and digital book server with OPDS support.
+- [Kavita](kavita/) - Digital library server for comics, manga, and books.
 - [Shelfmark](shelfmark/) - Search and request books and audiobooks from multiple sources.
 - [slskd](slskd/) - Web-based Soulseek client for searching, sharing, and downloading files.
 
@@ -22,6 +23,15 @@ multi-user access, OPDS catalogs, and device sync. It uses an embedded SQLite
 database and does not require a separate database add-on.
 
 See the [Stump add-on README](stump/README.md) for configuration and storage
+setup.
+
+## Kavita
+
+Kavita manages comics, manga, and books with browser-based readers, multi-user
+access, OPDS catalogs, reading lists, and device integrations. It uses an
+embedded SQLite database and does not require a separate database add-on.
+
+See the [Kavita add-on README](kavita/README.md) for configuration and storage
 setup.
 
 ## Shelfmark

@@ -1,0 +1,21 @@
+name: Kavita
+slug: kavita
+version: "1.0.0"
+description: Digital library server for comics, manga, and books
+url: https://github.com/tomjansen/hassio-addons/tree/master/kavita
+arch:
+  - amd64
+  - aarch64
+image: ghcr.io/tomjansen/kavita-{arch}
+init: false
+startup: services
+ports:
+  5000/tcp: 5000
+ports_description:
+  5000/tcp: Web interface
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+webui: "http://[HOST]:[PORT:5000]"
+watchdog: "http://[HOST]:[PORT:5000]/api/health"
