@@ -1,0 +1,31 @@
+name: Bazarr
+slug: bazarr
+version: "1.0.0"
+description: Companion subtitle manager for Sonarr and Radarr
+url: https://github.com/tomjansen/hassio-addons/tree/master/bazarr
+arch:
+  - amd64
+  - aarch64
+image: ghcr.io/tomjansen/bazarr-{arch}
+init: false
+startup: services
+ports:
+  6767/tcp: 6767
+ports_description:
+  6767/tcp: Web interface
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+webui: "http://[HOST]:[PORT:6767]"
+watchdog: "http://[HOST]:[PORT:6767]"
+options:
+  PUID: 0
+  PGID: 0
+  TZ: UTC
+  UMASK: "002"
+schema:
+  PUID: int
+  PGID: int
+  TZ: str
+  UMASK: str

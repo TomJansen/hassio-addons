@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+
+options_file=/data/options.json
+
+option() {
+    key="$1"
+    default="$2"
+    value=""
+
+    if [ -r "$options_file" ]; then
+        value="$(jq -er --arg key "$key" '.[$key] // empty' "$options_file" 2>/dev/null || true)"
+    fi
+
+    if [ -n "$value" ]; then
+        printf '%s' "$value"
+    else
+        printf '%s' "$default"
+    fi
+}
+
+export PUID="$(option PUID 0)"
+export PGID="$(option PGID 0)"
+export TZ="$(option TZ UTC)"
+export UMASK="$(option UMASK 002)"
+
+exec /init

@@ -5,6 +5,7 @@ This repository contains Home Assistant add-ons:
 ## Add-ons Provided
 
 - [Lidarr nightly](lidarr/) - Music collection manager for Usenet and BitTorrent users.
+- [Bazarr](bazarr/) - Companion subtitle manager for Sonarr and Radarr.
 - [Stump](stump/) - Comics, manga, and digital book server with OPDS support.
 - [Kavita](kavita/) - Digital library server for comics, manga, and books.
 - [Shelfmark](shelfmark/) - Search and request books and audiobooks from multiple sources.
@@ -15,6 +16,14 @@ This repository contains Home Assistant add-ons:
 Lidarr can monitor RSS feeds for new albums from your favorite artists and interface with download clients and indexers to grab, sort, and rename releases.
 
 See the [Lidarr add-on README](lidarr/README.md) for configuration, options, and usage details.
+
+## Bazarr
+
+Bazarr connects to Sonarr and Radarr to find, download, and manage subtitles
+for TV shows and movies according to language profiles and provider settings.
+
+See the [Bazarr add-on README](bazarr/README.md) for configuration and storage
+setup.
 
 ## Stump
 
