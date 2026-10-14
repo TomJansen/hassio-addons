@@ -8,3 +8,4 @@ LABEL \
 COPY --chmod=0755 addon-init /addon-init
 
 ENTRYPOINT ["/addon-init"]
+CMD ["python", "docker/supervisor.py", "--no-update", "--config", "/config"]

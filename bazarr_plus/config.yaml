@@ -1,6 +1,6 @@
 name: Bazarr+
 slug: bazarr_plus
-version: "1.0.0"
+version: "1.0.1"
 description: Standalone and automated subtitle manager for movies, TV, and sports
 url: https://github.com/tomjansen/hassio-addons/tree/master/bazarr_plus
 arch:
