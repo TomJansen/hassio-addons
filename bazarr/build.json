@@ -1,6 +1,0 @@
-{
-  "build_from": {
-    "amd64": "lscr.io/linuxserver/bazarr:version-v1.6.2",
-    "aarch64": "lscr.io/linuxserver/bazarr:version-v1.6.2"
-  }
-}

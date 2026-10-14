@@ -9,7 +9,17 @@ option() {
     value=""
 
     if [ -r "$options_file" ]; then
-        value="$(jq -er --arg key "$key" '.[$key] // empty' "$options_file" 2>/dev/null || true)"
+        value="$(python - "$options_file" "$key" 2>/dev/null <<'PY' || true
+import json
+import sys
+
+with open(sys.argv[1], encoding="utf-8") as options_file:
+    value = json.load(options_file).get(sys.argv[2])
+
+if value is not None:
+    print(value, end="")
+PY
+        )"
     fi
 
     if [ -n "$value" ]; then
@@ -22,6 +32,6 @@ option() {
 export PUID="$(option PUID 0)"
 export PGID="$(option PGID 0)"
 export TZ="$(option TZ UTC)"
-export UMASK="$(option UMASK 002)"
+umask "$(option UMASK 002)"
 
-exec /init
+exec /entrypoint.sh "$@"

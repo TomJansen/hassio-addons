@@ -24,15 +24,14 @@ class Addon:
     repository: str
     image: str
     strip_release_v: bool = False
-    image_tag_prefix: str = ""
 
 
 ADDONS = (
     Addon(
-        directory="bazarr",
-        repository="morpheus65535/bazarr",
-        image="lscr.io/linuxserver/bazarr",
-        image_tag_prefix="version-",
+        directory="bazarr_plus",
+        repository="LavX/bazarr",
+        image="ghcr.io/lavx/bazarr",
+        strip_release_v=True,
     ),
     Addon(
         directory="slskd",
@@ -114,12 +113,6 @@ def current_tag(build: dict, addon: Addon) -> str:
     if not reference.startswith(prefix):
         raise ValueError(f"Expected {reference!r} to start with {prefix!r}")
     tag = reference.removeprefix(prefix)
-    if addon.image_tag_prefix:
-        if not tag.startswith(addon.image_tag_prefix):
-            raise ValueError(
-                f"Expected image tag {tag!r} to start with {addon.image_tag_prefix!r}"
-            )
-        tag = tag.removeprefix(addon.image_tag_prefix)
     version_tuple(tag)
     return tag
 
@@ -198,7 +191,6 @@ def main() -> int:
             continue
 
         image_tag = available.removeprefix("v") if addon.strip_release_v else available
-        image_tag = f"{addon.image_tag_prefix}{image_tag}"
         reference = f"{addon.image}:{image_tag}"
         if not args.no_verify_images:
             try:
